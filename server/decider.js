@@ -14,6 +14,8 @@ var server = http.createServer(function(request, response) {
         if (fname[0] == '/') fname = fname.slice(1)
         console.log("fname is " + fname)
         ftype = {'themes/smoothness/jquery-ui.css':'text/css',
+                 'themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png':'image/png',
+                 'themes/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png':'image/png',
                  'jquery.js':'text/javascript',
                  'jquery-ui.js':'text/javascript',
                  'demo.html':'text/html',
