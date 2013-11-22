@@ -13,8 +13,13 @@ var server = http.createServer(function(request, response) {
         if (fname == '/') fname = 'demo.html'
         if (fname[0] == '/') fname = fname.slice(1)
         console.log("fname is " + fname)
-        if (fname in {'jquery.js':1, 'jquery-ui.js':1, 'demo.html':1, 'style.css':1}) {
-            response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+        ftype = {'themes/smoothness/jquery-ui.css':'text/css',
+                 'jquery.js':'text/javascript',
+                 'jquery-ui.js':'text/javascript',
+                 'demo.html':'text/html',
+                 'style.css':'text/css'}
+        if (fname in ftype) {
+            response.writeHead(200, {'Content-Type': ftype[fname] + '; charset=utf-8'})
             body = fs.readFile(fname, function(err, body) {
                 response.end(body)
             })
