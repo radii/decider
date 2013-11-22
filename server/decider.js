@@ -2,10 +2,42 @@ var http = require('http')
 var util = require('util')
 var fs = require('fs')
 var URL = require('url')
+var crypto = require('crypto')
+
+var sessions = {}
+
+function rand_cookie() {
+    var buf = crypto.randomBytes(15)
+    return buf.toString('base64').replace(/\//g,'_').replace(/\+/g,'-')
+}
+
+function get_session(request) {
+    var cookies = request.headers['cookie']
+    var session = false
+    cookies.split('; ').every(function(c) {
+            if (c in sessions) {
+                session = c
+                return false
+            }
+            return true
+    })
+    return session
+}
 
 var server = http.createServer(function(request, response) {
-    u = URL.parse(request.url, true)
-    if (u.pathname == '/stream') {
+    var headers={}
+    var session={}
+    var cookie=""
+    var u = URL.parse(request.url, true)
+    session = get_session(request)
+    console.log("cookie = " + request.headers['cookie'] + " session " + session)
+
+    if (!session) {
+        cookie = rand_cookie()
+        sessions[cookie] = {ts: Date.now()}
+        headers['Set-Cookie'] = cookie
+    }
+    if (u.pathname == '/poll') {
         response.writeHead(200, {'Content-Type': 'text/plain'})
         response.end('yep some stuff')
     } else {
@@ -21,8 +53,9 @@ var server = http.createServer(function(request, response) {
                  'demo.html':'text/html',
                  'style.css':'text/css'}
         if (fname in ftype) {
-            response.writeHead(200, {'Content-Type': ftype[fname] + '; charset=utf-8'})
-            body = fs.readFile(fname, function(err, body) {
+            headers['Content-Type'] = ftype[fname] + '; charset=utf-8'
+            response.writeHead(200, headers)
+            fs.readFile(fname, function(err, body) {
                 response.end(body)
             })
         } else {
