@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <title>jQuery UI Sortable - Connect lists</title>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="themes/smoothness/jquery-ui.css" />
 <script src="jquery.js"></script>
 <script src="jquery-ui.js"></script>
 <link rel="stylesheet" href="style.css" />
@@ -34,5 +34,23 @@ connectWith: ".connectedSortable"
 <li class="ui-state-highlight">Item 4</li>
 <li class="ui-state-highlight">Item 5</li>
 </ul>
+<br clear="all">
+<div id="foobar"></div>
+<form id='name' >
+<input name='q' class='textbox' placeholder='name'>
+</form>
+<form id='newitem' >
+<input name='q' class='textbox' placeholder='my suggestion'>
+</form>
+<script type="text/javascript">
+$( "form#newitem" ).submit(function (event) {
+event.preventDefault()
+$("#foobar").html("submit triggered")
+})
+$( "form#name" ).submit(function (event) {
+event.preventDefault()
+$("#foobar").html("name is foo")
+})
+</script>
 </body>
 </html>
