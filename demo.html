@@ -11,14 +11,16 @@
 #idealist { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
 #idealist li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
 </style>
+
 <script>
 $(function() {
-$( "#idealist" ).sortable({
-  change: function( event, ui ) {$("#foobar").html("sort changed")
-}
-}).disableSelection();
+	$( "#idealist" ).sortable({
+		change: function(event, ui) { updatelist()
+		}
+	}).disableSelection();
 });
 </script>
+
 </head>
 <body>
 <ul id="idealist" class="connectedSortable">
@@ -52,6 +54,10 @@ event.preventDefault()
 var name = $("#namefield").val();
 $("#foobar").html("name is " + name )
 })
+
+function updatelist(){
+	$("#foobar").html( "changed")
+}
 </script>
 
 </body>
