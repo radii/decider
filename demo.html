@@ -14,7 +14,8 @@
 <script>
 $(function() {
 $( "#idealist" ).sortable({
-connectWith: ".connectedSortable"
+  change: function( event, ui ) {$("#foobar").html("sort changed")
+}
 }).disableSelection();
 });
 </script>
@@ -37,6 +38,7 @@ connectWith: ".connectedSortable"
 <input name='q' id='itemfield' class='textbox' placeholder='my suggestion'>
 </form>
 <script type="text/javascript">
+
 $( "form#newitem" ).submit(function (event) {
 event.preventDefault()
 var item = $("#itemfield").val();
@@ -51,5 +53,6 @@ var name = $("#namefield").val();
 $("#foobar").html("name is " + name )
 })
 </script>
+
 </body>
 </html>
