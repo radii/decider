@@ -28,11 +28,10 @@ connectWith: ".connectedSortable"
 <li class="ui-state-default">Item 5</li>
 </ul>
 
-</ul>
 <br clear="all">
 <div id="foobar"></div>
 <form id='name' >
-<input name='q' class='textbox' placeholder='name'>
+<input name='q' id='namefield' type='text' class='textbox' placeholder='name'>
 </form>
 <form id='newitem' >
 <input name='q' class='textbox' placeholder='my suggestion'>
@@ -40,11 +39,13 @@ connectWith: ".connectedSortable"
 <script type="text/javascript">
 $( "form#newitem" ).submit(function (event) {
 event.preventDefault()
-$("#foobar").html("submit triggered")
+$("#foobar").html("submit new item" )
+
 })
 $( "form#name" ).submit(function (event) {
 event.preventDefault()
-$("#foobar").html("name is foo")
+var name = $("#namefield").val();
+$("#foobar").html("name is " + name )
 })
 </script>
 </body>
