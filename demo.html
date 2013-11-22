@@ -8,19 +8,19 @@
 <script src="jquery-ui.js"></script>
 <link rel="stylesheet" href="style.css" />
 <style>
-#sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
-#sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+#idealist { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
+#idealist li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
 </style>
 <script>
 $(function() {
-$( "#sortable1, #sortable2" ).sortable({
+$( "#idealist" ).sortable({
 connectWith: ".connectedSortable"
 }).disableSelection();
 });
 </script>
 </head>
 <body>
-<ul id="sortable1" class="connectedSortable">
+<ul id="idealist" class="connectedSortable">
 <li class="ui-state-default">Item 1</li>
 <li class="ui-state-default">Item 2</li>
 <li class="ui-state-default">Item 3</li>
@@ -34,14 +34,17 @@ connectWith: ".connectedSortable"
 <input name='q' id='namefield' type='text' class='textbox' placeholder='name'>
 </form>
 <form id='newitem' >
-<input name='q' class='textbox' placeholder='my suggestion'>
+<input name='q' id='itemfield' class='textbox' placeholder='my suggestion'>
 </form>
 <script type="text/javascript">
 $( "form#newitem" ).submit(function (event) {
 event.preventDefault()
+var item = $("#itemfield").val();
+$("#idealist").append(
+		$('<li>').attr('class', "ui-state-default").append(item))
 $("#foobar").html("submit new item" )
-
 })
+
 $( "form#name" ).submit(function (event) {
 event.preventDefault()
 var name = $("#namefield").val();
