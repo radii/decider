@@ -41,18 +41,27 @@ var server = http.createServer(function(request, response) {
         headers['Set-Cookie'] = cookie
     }
     if (u.pathname == '/poll') {
-        response.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'})
-        //var newname = request.
-        var result = {}
-        var names = []
-        for (var s in sessions) {
-            var name = sessions[s].name
-            if (name) {
-                names.push(name)
+        body = []
+        request.on('data', function(chunk) {
+            console.log('data ' + chunk.length + ' bytes')
+            body.push(chunk)
+        })
+        request.on('end', function() {
+            bodytxt = body.join('')
+            console.log('end ' + body.length + ' chunks, ' + bodytxt.length + ' bytes')
+            console.log('url ' + request.url)
+            response.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'})
+            var result = {}
+            var names = []
+            for (var s in sessions) {
+                var name = sessions[s].name
+                if (name) {
+                    names.push(name)
+                }
             }
-        }
-        result['names'] = names.join(' ')
-        response.end(JSON.stringify(result))
+            result['names'] = names.join(' ')
+            response.end(JSON.stringify(result))
+        })
     } else {
         fname = u.pathname
         if (fname == '/') fname = 'demo.html'
