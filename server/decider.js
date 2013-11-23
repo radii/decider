@@ -28,20 +28,31 @@ function get_session(request) {
 
 var server = http.createServer(function(request, response) {
     var headers={}
-    var session={}
     var cookie=""
     var u = URL.parse(request.url, true)
-    session = get_session(request)
-    console.log("cookie = " + request.headers['cookie'] + " session " + session)
+    var session = get_session(request)
+    console.log("cookie = " + request.headers['cookie'] + " session " +
+                JSON.stringify(session))
 
     if (!session) {
         cookie = rand_cookie()
-        sessions[cookie] = {ts: Date.now()}
+        session = {ts: Date.now()}
+        sessions[cookie] = session
         headers['Set-Cookie'] = cookie
     }
     if (u.pathname == '/poll') {
-        response.writeHead(200, {'Content-Type': 'text/plain'})
-        response.end('yep some stuff')
+        response.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'})
+        //var newname = request.
+        var result = {}
+        var names = []
+        for (var s in sessions) {
+            var name = sessions[s].name
+            if (name) {
+                names.push(name)
+            }
+        }
+        result['names'] = names.join(' ')
+        response.end(JSON.stringify(result))
     } else {
         fname = u.pathname
         if (fname == '/') fname = 'demo.html'
