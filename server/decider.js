@@ -14,13 +14,15 @@ function rand_cookie() {
 function get_session(request) {
     var cookies = request.headers['cookie']
     var session = false
-    cookies.split('; ').every(function(c) {
-            if (c in sessions) {
-                session = c
-                return false
-            }
-            return true
-    })
+    if (cookies) {
+        cookies.split('; ').every(function(c) {
+                if (c in sessions) {
+                    session = sessions[c]
+                    return false
+                }
+                return true
+        })
+    }
     return session
 }
 
