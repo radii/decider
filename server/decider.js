@@ -50,6 +50,10 @@ var server = http.createServer(function(request, response) {
             bodytxt = body.join('')
             console.log('end ' + body.length + ' chunks, ' + bodytxt.length + ' bytes')
             console.log('url ' + request.url)
+            var url = URL.parse(request.url, true)
+            if (url.query.name) {
+                session.name = url.query.name
+            }
             response.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'})
             var result = {}
             var names = []
