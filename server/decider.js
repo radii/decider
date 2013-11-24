@@ -66,7 +66,7 @@ var server = http.createServer(function(request, response) {
                     names.push(name)
                 }
             }
-            result['names'] = names.join(' ')
+            result['names'] = names
             result['items'] = session.items
 
             response.end(JSON.stringify(result))
