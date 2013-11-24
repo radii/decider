@@ -54,6 +54,9 @@ var server = http.createServer(function(request, response) {
             if (url.query.name) {
                 session.name = url.query.name
             }
+            if (url.query.items) {
+                session.items = JSON.parse(url.query.items)
+            }
             response.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'})
             var result = {}
             var names = []
@@ -64,6 +67,8 @@ var server = http.createServer(function(request, response) {
                 }
             }
             result['names'] = names.join(' ')
+            result['items'] = session.items
+
             response.end(JSON.stringify(result))
         })
     } else {
