@@ -42,19 +42,22 @@ $(function() {
 <script type="text/javascript">
 
 $( "form#newitem" ).submit(function (event) {
-event.preventDefault()
-var item = $("#itemfield").val();
-$("#idealist").append(
-		$('<li>').attr('class', "ui-state-default").append(item))
-$("#foobar").html("submit new item" )
+    event.preventDefault()
+    var item = $("#itemfield").val();
+    $("#idealist").append($('<li>').attr('class', "ui-state-default").append(item))
+    $("#foobar").html("submit new item" )
 })
 
 $( "form#name" ).submit(function (event) {
-event.preventDefault()
-var name = $("#namefield").val();
-$("#foobar").html("name is " + name )
-$.ajax('/poll', {data:{name: name}})
+    event.preventDefault()
+    name = $("#namefield").val();
+    $("#foobar").html("name is " + name )
+    post_data()
 })
+
+function post_data(){
+    $.ajax('/poll', {data:{name: name}})
+}
 
 function updatelist(){
 	$("#foobar").html( "changed")
