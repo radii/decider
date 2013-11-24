@@ -24,11 +24,11 @@ $(function() {
 </head>
 <body>
 <ul id="idealist" class="connectedSortable">
-<li class="ui-state-default">Item 1</li>
-<li class="ui-state-default">Item 2</li>
-<li class="ui-state-default">Item 3</li>
-<li class="ui-state-default">Item 4</li>
-<li class="ui-state-default">Item 5</li>
+<li class="ui-state-default" id="item1">Item 1</li>
+<li class="ui-state-default" id="item2">Item 2</li>
+<li class="ui-state-default" id="item3">Item 3</li>
+<li class="ui-state-default" id="item4">Item 4</li>
+<li class="ui-state-default" id="item5">Item 5</li>
 </ul>
 
 <br clear="all">
@@ -40,6 +40,10 @@ $(function() {
 <input name='q' id='itemfield' class='textbox' placeholder='my suggestion'>
 </form>
 <script type="text/javascript">
+
+var name = 'none'
+var items = {}
+var ranking = []
 
 $( "form#newitem" ).submit(function (event) {
     event.preventDefault()
@@ -56,7 +60,7 @@ $( "form#name" ).submit(function (event) {
 })
 
 function post_data(){
-    $.ajax('/poll', {data:{name: name}})
+    $.ajax('/poll', {data:{name: name, items: JSON.stringify({items:items, ranking: ranking})}})
 }
 
 function updatelist(){
