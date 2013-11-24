@@ -24,11 +24,6 @@ $(function() {
 </head>
 <body>
 <ul id="idealist" class="connectedSortable">
-<li class="ui-state-default" id="item1">Item 1</li>
-<li class="ui-state-default" id="item2">Item 2</li>
-<li class="ui-state-default" id="item3">Item 3</li>
-<li class="ui-state-default" id="item4">Item 4</li>
-<li class="ui-state-default" id="item5">Item 5</li>
 </ul>
 
 <br clear="all">
@@ -43,12 +38,17 @@ $(function() {
 
 var name = 'none'
 var items = {}
+var itemcount = 0
 var ranking = []
 
 $( "form#newitem" ).submit(function (event) {
     event.preventDefault()
     var item = $("#itemfield").val();
-    $("#idealist").append($('<li>').attr('class', "ui-state-default").append(item))
+    $("#idealist").append(
+            $('<li>')
+                .attr('class', "ui-state-default")
+                .attr('id', 'item' + (++itemcount))
+                .append(item))
     $("#foobar").html("submit new item" )
 })
 
@@ -65,7 +65,11 @@ function post_data(){
 }
 
 function updatelist(){
-	$("#foobar").html( "changed")
+    $('.ui-state-default').each(function(x) {
+        items[this.id] = $(this).text()
+        ranking[x] = this.id
+    })
+    $("#foobar").html( "changed; " + items.length + " items")
 }
 </script>
 
